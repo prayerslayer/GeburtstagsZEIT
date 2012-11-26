@@ -1,0 +1,63 @@
+body {
+	font: 20px HelveticaNeue, Helvetica, Arial, sans-serif;
+	line-height: 28px;
+}
+
+#wrapper {
+	min-height: 100%;
+	padding: 10px;
+}
+
+#top {
+	padding: 20px;
+}
+
+#results {
+	border-top: 1px solid black;
+	padding: 20px;
+}
+
+#footer {
+	background-color: black;
+	color: white;
+	height: 50px;
+	padding: 50px;
+}
+
+#spinner, #logo {
+	display: none;
+}
+
+img#logo {
+	width: 50px;
+	height: 50px;
+	float: left;
+}
+
+a#link {
+	color: #900;
+	font-size: 14px;
+}
+
+span {
+	padding-left: 30px;
+}
+
+span#subtitle {
+	font: 14px Georgia;
+}
+
+span#title {
+	font-size: 24px;
+	line-height: 28px;
+	color: #333;
+	font-weight: 700;
+}
+
+span#supertitle {
+	text-transform: uppercase;
+	font-weight: 700;
+	font-size: 10px;
+	line-height: 14px;
+	color: #900;
+}

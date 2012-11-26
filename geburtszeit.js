@@ -1,0 +1,81 @@
+var options = {
+	"apikey": "b09f0e1163a77b314c56ee3f6b788379fda54bc17413e78a59dd",
+	"endpoint": "http://api.zeit.de/content"
+}
+
+function setFields( result ) {
+	$( "img#logo" ).fadeIn( 200 );
+	$.each( result, function( idx, value ) {
+		$( "span#"+idx ).text( value );
+	});
+	$( "a#link" ).attr( "href", result.href );
+	$( "a#link" ).text( "Link" );
+}
+
+function clearFields() {
+	$( "#messages" ).empty();
+	$( "#title" ).empty();
+	$( "#subtitle" ).empty();
+	$( "#supertitle" ).empty();
+}
+
+$( document ).ready( function() {
+	var $spinner = $( "#spinner" );
+	var $results = $( "#results" );
+	var $messages = $( "#messages" );
+
+	//load datepicker
+	var input = $( "#date" ).pickadate({
+		first_day: 1,
+		month_selector: true,
+		format_submit: "yyyy-mm-dd",
+		year_selector: 100,
+		//weekdays_short: [ 'So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa' ],
+		months_full: [ 'Januar', 'Februar', 'März', "April", 'Mai', 'April', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember' ],
+		format: 'ddd, dd.mm.yyyy',
+		date_max: true, //today
+		date_min: [ 1946, 1, 1 ]
+	});
+	var calendar = input.data( 'pickadate' );
+	//set it to today
+	var today = new Date();
+
+	calendar.setDate( today.getFullYear(), 11, 8 );
+
+	//init button event handler
+	$( "#load" ).click( function( ) {
+
+		clearFields();
+
+		var day = calendar.getDate();
+		var from = day + "T06:00:00Z";
+		var to = day + "T22:00:00Z";
+
+		console.log( from, to );
+
+		$.ajax({
+			"url": options.endpoint,
+			"method": "GET",
+			"data": {
+				"q": "release_date:[" + from + " TO " + to + "]",
+				"sort": "release_date asc"
+			},
+			beforeSend: function( req ) {
+				$spinner.show( 200 );
+				req.setRequestHeader( "X-Authorization", options.apikey );
+			}
+		}).done( function( response ) {
+			$spinner.hide( 200 );
+			console.log( response );
+
+			if ( response.found === 0 ) {
+				$messages.text( "Leider wurde keine Ausgabe der ZEIT an diesem Tag gefunden." );
+			}
+			else {
+				var result = response.matches[ 0 ];
+
+				setFields( result );
+			}
+		});
+	});
+});
