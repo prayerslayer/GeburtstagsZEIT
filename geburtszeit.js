@@ -3,13 +3,35 @@ var options = {
 	"endpoint": "http://api.zeit.de/content"
 }
 
-function setFields( result ) {
-	$( "img#logo" ).fadeIn( 200 );
-	$.each( result, function( idx, value ) {
-		$( "span#"+idx ).text( value );
+function chooseResult( matches ) {
+	_.shuffle( matches );
+	var storys = _.reject( matches, function( match ) {
+		return match.subtitle == null;
 	});
-	$( "a#link" ).attr( "href", result.href );
-	$( "a#link" ).text( "Link" );
+	if ( storys.length < 3 ) {
+		storys = storys.join( storys, matches.slice( 0, 3-storys.length ) );
+	}
+	else {
+		storys = storys.slice( 0, 3 );
+	}
+	console.log( storys );
+	return storys;
+}
+
+function setFields( results ) {
+	var title = results[0];
+	var bigstory = results[1];
+	var lilstory = results[2];
+
+	$( "#hero .title").text( title.title );
+	$( "#hero .subtitle" ).text( title.subtitle );
+
+	$( "#bigstory .title" ).text( bigstory.title );
+	$( "#bigstory .subtitle" ).text( bigstory.subtitle );
+
+	$( "#lilstory .title" ).text( lilstory.title );
+	$( "#lilstory .subtitle" ).text( lilstory.subtitle );
+
 }
 
 function clearFields() {
@@ -30,17 +52,15 @@ $( document ).ready( function() {
 		month_selector: true,
 		format_submit: "yyyy-mm-dd",
 		year_selector: 100,
-		//weekdays_short: [ 'So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa' ],
+		weekdays_short: [ 'So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa' ],
 		months_full: [ 'Januar', 'Februar', 'März', "April", 'Mai', 'April', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember' ],
 		format: 'ddd, dd.mm.yyyy',
-		date_max: true, //today
+		date_max: true,
 		date_min: [ 1946, 1, 1 ]
 	});
 	var calendar = input.data( 'pickadate' );
-	//set it to today
-	var today = new Date();
 
-	calendar.setDate( today.getFullYear(), 11, 8 );
+	calendar.setDate( 1954, 11, 16 );
 
 	//init button event handler
 	$( "#load" ).click( function( ) {
@@ -48,7 +68,24 @@ $( document ).ready( function() {
 		clearFields();
 
 		var day = calendar.getDate();
-		var from = day + "T06:00:00Z";
+		var date = new Date( day );
+		
+		console.log( date );
+
+		if ( date.getFullYear() < 1996 ) {
+			// pre zeit online
+
+			//in case date is not a thursday
+			if ( date.getDay() !== 4) {
+				//look for last thursday
+				var daysback = ( ( date.getDay() - 4 + 7 ) % 7 )+1;
+				date = new Date( date.getFullYear(), date.getMonth() + 1, date.getDate()-daysback );
+			}
+
+		}
+
+		day = date.toISOString().slice( 0, 10 );
+		var from = day + "T05:00:00Z";
 		var to = day + "T22:00:00Z";
 
 		console.log( from, to );
@@ -58,7 +95,8 @@ $( document ).ready( function() {
 			"method": "GET",
 			"data": {
 				"q": "release_date:[" + from + " TO " + to + "]",
-				"sort": "release_date asc"
+				"sort": "release_date asc",
+				"limit": "100"
 			},
 			beforeSend: function( req ) {
 				$spinner.show( 200 );
@@ -74,7 +112,9 @@ $( document ).ready( function() {
 			else {
 				var result = response.matches[ 0 ];
 
-				setFields( result );
+				setFields( chooseResult( response.matches ) );
+
+				$results.fadeIn( 200 );
 			}
 		});
 	});

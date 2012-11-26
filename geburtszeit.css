@@ -15,6 +15,8 @@ body {
 #results {
 	border-top: 1px solid black;
 	padding: 20px;
+	width: 60%;
+	display: none;
 }
 
 #footer {
@@ -24,14 +26,18 @@ body {
 	padding: 50px;
 }
 
-#spinner, #logo {
+#spinner {
 	display: none;
 }
 
 img#logo {
-	width: 50px;
-	height: 50px;
-	float: left;
+	width: 80%;
+	margin-left: 10%;
+}
+
+#belowlogo {
+	text-transform: uppercase;
+	font-size: 30px;
 }
 
 a#link {
@@ -39,25 +45,31 @@ a#link {
 	font-size: 14px;
 }
 
+div.text {
+	font-size: 14px;
+	line-height: 18px;
+}
+
 span {
 	padding-left: 30px;
 }
 
-span#subtitle {
-	font: 14px Georgia;
+#hero {
+	height: 400px;
+	border: 1px solid black;
+	padding: 50px;
+	margin-top: 50px;
+	overflow: hidden;
 }
 
-span#title {
-	font-size: 24px;
-	line-height: 28px;
+#hero .subtitle {
+	font: 36px/48px Georgia;
+}
+
+#hero .title {
+	font-size: 48px;
+	line-height: 72px;
 	color: #333;
 	font-weight: 700;
 }
 
-span#supertitle {
-	text-transform: uppercase;
-	font-weight: 700;
-	font-size: 10px;
-	line-height: 14px;
-	color: #900;
-}

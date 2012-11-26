@@ -5,10 +5,12 @@
 		<meta charset="utf-8">
 		
 		<link rel="stylesheet" href="normalize.css">
+		<link rel="stylesheet" href="simplegrid.css">
 		<link rel="stylesheet" href="pickadate.css">
 		<link rel="stylesheet" href="geburtszeit.css">
 		
 		<script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="underscore-min.js"></script>
 		<script type="text/javascript" src="pickadate.min.js"></script>
 		<script type="text/javascript" src="geburtszeit.js"></script>
 	</head>
@@ -17,7 +19,7 @@
 			<div id="top">
 				<h1>GeburtsZEIT</h1>
 				<p>
-					Erfahren Sie die ZEIT Schlagzeile an Ihrem Geburtstag!
+					Sehen Sie eine mögliches ZEIT Titelblatt von Ihrem Geburtstag!
 				</p>
 				<input id="date" type="text" /><button id="load" >Ansehen</button><img id="spinner" src="spinner.gif" />
 				<div id="messages">
@@ -25,11 +27,44 @@
 			</div>
 			<div id="results">
 				<!-- results go here-->
-				<img id="logo" src="zeitlogo.png" alt="">
-				<span id="supertitle"></span><br/>
-				<span id="title"></span><br/>
-				<span id="subtitle"></span>
-				<a id="link"></a>
+				
+				<div id="header">
+					<img id="logo" src="zeitlogo.png" alt="">
+					<div id="belowlogo">Wöchentliche Zeitung für Politik, Wirtschaft, Wissen und Kultur</div>	
+				</div>
+				<div id="hero">
+					<div class="title">1949: Nationalstolz und Postkartenverkäufer</div>
+					<div class="subtitle">200 000 illegale Jugendliche aus dem Osten in Westdeutschland</div>
+				</div>
+				<div class="grid grid-pad">
+					<div id="bigstory" class="col-7-12">
+						<h1 class="title">Wie tief sinkt die SPD?</h1>	
+						<h4 class="subtitle">Lorem ipsum SPD SPD lorm</h4>
+						
+						<div class="text col-1-3">
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum quis metus ut lorem ultricies congue. Suspendisse dignissim, velit aliquet faucibus malesuada, mauris diam tristique augue, sit amet semper lacus velit sed erat. Aliquam nisl justo, porttitor consequat molestie eu, accumsan quis turpis. Sed sapien erat, sollicitudin at porta id, rhoncus nec odio. Proin in pharetra ligula. Suspendisse turpis nulla, posuere convallis condimentum sit amet, interdum et turpis. Suspendisse fringilla metus ac est elementum sagittis. Pellentesque eu facilisis risus. Suspendisse potenti.</p>
+							
+							<p>Sed iaculis commodo turpis, et porttitor lorem faucibus sit amet. Vivamus sit amet leo diam, rhoncus ultricies orci. Sed consequat aliquet venenatis. Praesent pellentesque felis eu ante imperdiet ut faucibus est sollicitudin. Cras blandit, massa ac suscipit posuere, tortor risus laoreet sapien, consequat accumsan lacus neque non turpis. Aenean sit amet magna urna, quis porta massa.</p>
+						</div>
+						<div class="text col-1-3">
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum quis metus ut lorem ultricies congue. Suspendisse dignissim, velit aliquet faucibus malesuada, mauris diam tristique augue, sit amet semper lacus velit sed erat. Aliquam nisl justo, porttitor consequat molestie eu, accumsan quis turpis. Sed sapien erat, sollicitudin at porta id, rhoncus nec odio. Proin in pharetra ligula.</p>
+							<p>Suspendisse turpis nulla, posuere convallis condimentum sit amet, interdum et turpis. Suspendisse fringilla metus ac est elementum sagittis. Pellentesque eu facilisis risus. Suspendisse potenti. Sed iaculis commodo turpis, et porttitor lorem faucibus sit amet. Vivamus sit amet leo diam, rhoncus ultricies orci. Sed consequat aliquet venenatis. Praesent pellentesque felis eu ante imperdiet ut faucibus est sollicitudin. Cras blandit, massa ac suscipit posuere, tortor risus laoreet sapien, consequat accumsan lacus neque non turpis. Aenean sit amet magna urna, quis porta massa.</p>
+						</div>
+						<div class="text col-1-3">
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum quis metus ut lorem ultricies congue. Suspendisse dignissim, velit aliquet faucibus malesuada, mauris diam tristique augue, sit amet semper lacus velit sed erat. Aliquam nisl justo, porttitor consequat molestie eu, accumsan quis turpis. Sed sapien erat, sollicitudin at porta id, rhoncus nec odio. Proin in pharetra ligula. Suspendisse turpis nulla, posuere convallis condimentum sit amet, interdum et turpis. Suspendisse fringilla metus ac est elementum sagittis. Pellentesque eu facilisis risus. Suspendisse potenti.</p>
+						</div>
+					</div>
+					<div id="lilstory" class="col-5-12">
+						<h2 class="title">Apo in roten ROben</h2>
+						<h4 class="subtitle">Maecenas id nisi ligula, nec congue nibh. Nulla facilisi. Duis vestibulum cursus risus eu cursus. Cras ornare purus vitae mi congue bibendum. Fusce auctor nisi ut est varius mattis. Sed eu sapien ligula. Cras vel vehicula sapien.</h4>
+						<div class="text col-1-2">
+							Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec vel sapien ante, at molestie dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam scelerisque nibh quis libero sodales imperdiet. Nullam tellus dolor, lacinia ac tempus a, pulvinar nec turpis. Sed condimentum est non dui sodales ut varius leo bibendum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent ultrices mollis posuere. Donec posuere fermentum orci, quis iaculis lacus placerat sit amet. Ut cursus egestas est a rutrum. Suspendisse eget sapien libero, vitae sodales enim. Sed nec urna ac est scelerisque rutrum quis non purus.
+						</div>
+						<div class="text col-1-2">
+							Etiam laoreet venenatis lacus, at fermentum eros tristique ac. Cras tincidunt est sed nisl consequat suscipit. Fusce sodales nibh eu arcu faucibus semper. In et lectus sit amet ipsum lobortis sodales. Integer sed aliquet eros. Pellentesque at ante eget nunc sagittis congue sit amet et felis. Sed pellentesque hendrerit neque, nec posuere magna pharetra id. Proin elit turpis, venenatis ac commodo ullamcorper, lacinia vel felis. In vitae risus id turpis imperdiet volutpat. Etiam at libero nec massa faucibus gravida sed id libero. Quisque varius mauris id lectus aliquam hendrerit condimentum eros porta. Aenean odio sapien, condimentum nec feugiat ut, venenatis ac turpis. Suspendisse congue ultricies varius. In hac habitasse platea dictumst.
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div id="footer">
