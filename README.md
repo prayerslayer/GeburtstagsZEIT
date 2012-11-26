@@ -1,5 +1,11 @@
 # GeburtstagsZEIT
 
-## TODO
+Eine mehr oder weniger realistische, illustrierte Titelseite der Zeit von einem Tag ihrer Wahl!
 
-* Illustrieren --> Code aus Elm Example nehmen, in Bibliothek verpacken (requestImage( tag, callback, [width, height]) ) und einbauen
+# Verwenden
+
+* Runterladen
+* Entpacken
+* Ansurfen
+
+Oder sofort [aufrufen](http://nikolaus-piccolotto.info/geburtszeit/)
