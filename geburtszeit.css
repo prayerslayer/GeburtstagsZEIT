@@ -60,6 +60,8 @@ span {
 	padding: 50px;
 	margin-top: 50px;
 	overflow: hidden;
+	background-position: top left;
+	background-repeat: no-repeat;
 }
 
 #hero .subtitle {

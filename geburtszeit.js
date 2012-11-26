@@ -22,9 +22,39 @@ function setFields( results ) {
 	var title = results[0];
 	var bigstory = results[1];
 	var lilstory = results[2];
+	var $hero = $( "#hero" );
 
 	$( "#hero .title").text( title.title );
 	$( "#hero .subtitle" ).text( title.subtitle );
+
+	//set image for hero
+	//get something from title
+	var words = title.title.split( " " );
+	var noun_verb = null;
+	for ( var i = 0; i <= words.length; i++ ) {
+		var word = words[ i ];
+		console.log( word );
+		var firstchar = word.charAt( 0 );
+		if ( firstchar === firstchar.toUpperCase() ) {
+			//firstchar is uppercase, indicating a noun
+			//check with stopword list
+			if ( !_.contains( Stopwords.German, word.toLowerCase() ) ) {
+				noun_verb = word;
+				break;
+			}
+		}
+	}
+	if ( noun_verb === null ) {
+		//everything in the title is a stop word?
+		word = words[0];
+	}
+
+	RandomFlickr.get( word, function( url ) {
+		$hero.css( "background-image", "url("+url+")" );
+	},
+	{
+		size: [ $hero.width(), $hero.height() ]
+	});
 
 	$( "#bigstory .title" ).text( bigstory.title );
 	$( "#bigstory .subtitle" ).text( bigstory.subtitle );
@@ -39,6 +69,7 @@ function clearFields() {
 	$( "#title" ).empty();
 	$( "#subtitle" ).empty();
 	$( "#supertitle" ).empty();
+	$( "#results" ).fadeOut();
 }
 
 $( document ).ready( function() {
@@ -53,7 +84,7 @@ $( document ).ready( function() {
 		format_submit: "yyyy-mm-dd",
 		year_selector: 100,
 		weekdays_short: [ 'So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa' ],
-		months_full: [ 'Januar', 'Februar', 'März', "April", 'Mai', 'April', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember' ],
+		months_full: [ 'Januar', 'Februar', 'März', "April", 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember' ],
 		format: 'ddd, dd.mm.yyyy',
 		date_max: true,
 		date_min: [ 1946, 1, 1 ]
@@ -78,8 +109,8 @@ $( document ).ready( function() {
 			//in case date is not a thursday
 			if ( date.getDay() !== 4) {
 				//look for last thursday
-				var daysback = ( ( date.getDay() - 4 + 7 ) % 7 )+1;
-				date = new Date( date.getFullYear(), date.getMonth() + 1, date.getDate()-daysback );
+				var daysback = ( ( date.getDay() + 2 ) % 7 );
+				date = new Date( date.getFullYear(), date.getMonth(), date.getDate()-daysback );
 			}
 
 		}
@@ -107,7 +138,7 @@ $( document ).ready( function() {
 			console.log( response );
 
 			if ( response.found === 0 ) {
-				$messages.text( "Leider wurde keine Ausgabe der ZEIT an diesem Tag gefunden." );
+				$messages.text( "Leider wurde keine Ausgabe der ZEIT im betroffenen Zeitraum gefunden." );
 			}
 			else {
 				var result = response.matches[ 0 ];

@@ -2,4 +2,4 @@
 
 ## TODO
 
-* Aktuelle ZEIT zum Geburtstag rausfinden --> Donnerstag vor Geburtstag, aber nur bis 1996
+* Illustrieren --> Code aus Elm Example nehmen, in Bibliothek verpacken (requestImage( tag, callback, [width, height]) ) und einbauen
