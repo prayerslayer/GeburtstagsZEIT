@@ -9,7 +9,7 @@ function chooseResult( matches ) {
 		return match.subtitle == null;
 	});
 	if ( storys.length < 3 ) {
-		storys = storys.join( storys, matches.slice( 0, 3-storys.length ) );
+		storys = storys.concat( matches.slice( 0, 3-storys.length ) );
 	}
 	else {
 		storys = storys.slice( 0, 3 );
@@ -107,30 +107,29 @@ $( document ).ready( function() {
 			// pre zeit online
 
 			//in case date is not a thursday
-			if ( date.getDay() !== 4) {
+			if ( date.getDay() !== 5) {
 				//look for last thursday
-				var daysback = ( ( date.getDay() + 2 ) % 7 );
+				var daysback = ( ( date.getDay() + 1 ) % 7 );
 				date = new Date( date.getFullYear(), date.getMonth(), date.getDate()-daysback );
 			}
 
 		}
 
 		day = date.toISOString().slice( 0, 10 );
-		var from = day + "T05:00:00Z";
-		var to = day + "T22:00:00Z";
+		var from = day + "T00:00:00Z";
+		var to = day + "T23:59:59Z";
 
 		console.log( from, to );
-
-		$.ajax({
+		$spinner.show( 200 );
+		$.ajax( { 
 			"url": options.endpoint,
 			"method": "GET",
-			"data": {
+			"data":	{ 
 				"q": "release_date:[" + from + " TO " + to + "]",
 				"sort": "release_date asc",
-				"limit": "100"
+				"limit": 100
 			},
 			beforeSend: function( req ) {
-				$spinner.show( 200 );
 				req.setRequestHeader( "X-Authorization", options.apikey );
 			}
 		}).done( function( response ) {
