@@ -100,26 +100,21 @@ $( document ).ready( function() {
 
 		var day = calendar.getDate();
 		var date = new Date( day );
-		
+		var to = date.toISOString().slice( 0, 10 ) + "T23:59:59Z";
+		var from = date.toISOString().slice( 0, 10 ) + "T00:00:00Z";
+
 		console.log( date );
 
-		if ( date.getFullYear() < 1996 ) {
+		if ( date.getFullYear() < 2000 ) {
 			// pre zeit online
-
-			//in case date is not a thursday
-			if ( date.getDay() !== 5) {
-				//look for last thursday
-				var daysback = ( ( date.getDay() + 1 ) % 7 );
-				date = new Date( date.getFullYear(), date.getMonth(), date.getDate()-daysback );
-			}
-
-		}
-
-		day = date.toISOString().slice( 0, 10 );
-		var from = day + "T00:00:00Z";
-		var to = day + "T23:59:59Z";
+			//search in past week
+			var daysback = ( date.getDate() - 7 );
+			var new_from = new Date( date.getFullYear(), date.getMonth(), daysback );
+			from = new_from.toISOString().slice( 0, 10 ) + "T00:00:00Z";
+		}		
 
 		console.log( from, to );
+
 		$spinner.show( 200 );
 		$.ajax( { 
 			"url": options.endpoint,
@@ -137,7 +132,10 @@ $( document ).ready( function() {
 			console.log( response );
 
 			if ( response.found === 0 ) {
-				$messages.text( "Leider wurde keine Ausgabe der ZEIT im betroffenen Zeitraum gefunden." );
+				var moment_from = moment( from );
+				var moment_to = moment( to );
+				var format = "D.M.YYYY";
+				$messages.text( "Leider wurde keine Ausgabe der ZEIT im Zeitraum " + moment_from.format( format ) + " - " + moment_to.format( format ) + " gefunden." );
 			}
 			else {
 				var result = response.matches[ 0 ];
